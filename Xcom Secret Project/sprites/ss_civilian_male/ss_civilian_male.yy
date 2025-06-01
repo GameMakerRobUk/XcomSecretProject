@@ -3,9 +3,9 @@
   "%Name":"ss_civilian_male",
   "bboxMode":0,
   "bbox_bottom":408,
-  "bbox_left":0,
+  "bbox_left":4,
   "bbox_right":262,
-  "bbox_top":0,
+  "bbox_top":8,
   "collisionKind":1,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
@@ -14,8 +14,8 @@
   "frames":[
     {"$GMSpriteFrame":"","%Name":"57334472-83f8-4fdd-9645-9c7930f0d71b","name":"57334472-83f8-4fdd-9645-9c7930f0d71b","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
-  "gridX":0,
-  "gridY":0,
+  "gridX":33,
+  "gridY":41,
   "height":409,
   "HTile":false,
   "layers":[
