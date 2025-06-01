@@ -1,61 +1,38 @@
-function create_character_sprites(_spritesheet, _frame_w = 33, _frame_h = 41, _xorigin = 16, _yorigin = 33){
+function create_character_sprites(_spritesheet, _data){
 	
 	/*
-		global.ACTOR_STATES = ["idle", "moving", "died"];
-		global.DIR = ["ne", "e", "se", "s", "sw", "w", "nw", "n"];
-		
-		HOW WILL THE ACTORS STORE THEIR SPRITES TO BE USED:
-		
-		actor_sprites = { 
-			idle : [ne, e, se, s, sw, w, nw, n],
-			moving : [ne, e, se, s, sw, w, nw, n],
-			died : [ne, e, se, s, sw, w, nw, n],
+		_data : {
+			idle : [],
+			move : [],
+			died : [],
+			sprite_data : {sprite_sheet : ss_civilian_male, frame_w : 33, frame_h : 41, xorigin : 16, yorigin : 33},
 		}
-		
 	*/
 	
-	var _state_data = {
-		"idle" : [],
-		"moving" : [],
-		"died" : [],
-	}
-	
-	for (var i = 0; i < array_length(global.DIR); i ++){
-		_state_data.idle[i] = {xframe_start : i, yframe_start : 0, xframes_per_state : 1};
-		_state_data.moving[i] = {xframe_start : 0, yframe_start : i + 1, xframes_per_state : 8};
-		_state_data.died[i] = {xframe_start : 0, yframe_start : 9, xframes_per_state : 3};
-	}
-	
 	var _sprites = {};
-	
 	var _state_names = global.ACTOR_STATES;
-	
+		
 	for (var _state = 0; _state < array_length(_state_names); _state ++){
 		
 		var _state_name = _state_names[_state];
-		var _data_array = struct_get(_state_data, _state_name);
+		var _data_array = struct_get(_data, _state_name);
+			
+		show_debug_message("_data_array: " + string(_data_array));
+		show_debug_message("_state_name: " + string(_state_name));
+			
 		var _state_struct = {};
-		
-		/*
-			actor_sprites_struct
-			{
-				idle : {n : 1, s : 2, e : 3} etc   | state_struct containing values
-				moving : {n : 4, s : 5, e : 6} etc
-			}
-		*/
 		
 		for (var _dir = 0; _dir < array_length(global.DIR); _dir ++){
 			
 			var _new_sprite = create_new_sprite(_spritesheet,
-												_frame_w, _frame_h,
+												_data.sprite_data.frame_w, _data.sprite_data.frame_h,
 												_data_array[_dir].xframe_start, _data_array[_dir].yframe_start,
 												_data_array[_dir].xframes_per_state,
-												_xorigin, _yorigin);
+												_data.sprite_data.xorigin, _data.sprite_data.yorigin);
 												
 			struct_set(_state_struct, global.DIR[_dir], _new_sprite);
 			
 		}
-		
 		struct_set(_sprites, _state_name, _state_struct);
 	}
 	

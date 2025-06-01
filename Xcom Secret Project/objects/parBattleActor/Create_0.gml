@@ -1,9 +1,7 @@
 sprites = global.battle_sprites.civilian;
-state = "idle";
-dir = "ne";
 
 show_debug_message("sprites: " + string(sprites));
 
-set_sprite();
+initialised = false;
 
 alarm[0] = 20;
