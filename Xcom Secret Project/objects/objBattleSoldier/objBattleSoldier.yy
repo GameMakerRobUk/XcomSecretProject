@@ -1,11 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"objBattleZombie",
-  "eventList":[
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"objBattleSoldier",
+  "eventList":[],
   "managed":true,
-  "name":"objBattleZombie",
+  "name":"objBattleSoldier",
   "overriddenProperties":[],
   "parent":{
     "name":"Units",

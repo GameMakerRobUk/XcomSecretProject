@@ -10,8 +10,8 @@
   "name":"parBattleActor",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Units",
+    "path":"folders/Objects/Units.yy",
   },
   "parentObjectId":null,
   "persistent":false,

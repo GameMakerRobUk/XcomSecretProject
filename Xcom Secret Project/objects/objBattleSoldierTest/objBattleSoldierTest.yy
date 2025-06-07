@@ -1,20 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"objBattleZombie",
+  "%Name":"objBattleSoldierTest",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"objBattleZombie",
+  "name":"objBattleSoldierTest",
   "overriddenProperties":[],
   "parent":{
     "name":"Units",
     "path":"folders/Objects/Units.yy",
   },
-  "parentObjectId":{
-    "name":"parBattleActor",
-    "path":"objects/parBattleActor/parBattleActor.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

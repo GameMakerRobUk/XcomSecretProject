@@ -17,9 +17,6 @@ function create_character_sprites(_spritesheet, _data){
 		var _state_name = _state_names[_state];
 		var _data_array = struct_get(_data, _state_name);
 			
-		show_debug_message("_data_array: " + string(_data_array));
-		show_debug_message("_state_name: " + string(_state_name));
-			
 		var _state_struct = {};
 		
 		for (var _dir = 0; _dir < array_length(global.DIR); _dir ++){
