@@ -3,11 +3,22 @@
 hcells = room_width div CELL_SIZE;
 vcells = room_height div CELL_SIZE;
 
+var _lay_id = layer_get_id("ts_top_down");
+var _map_id = layer_tilemap_get_id(_lay_id);
+
 global.grid = [];
 
 for (var yy = 0; yy < vcells; yy ++){
 	for (var xx = 0; xx < hcells; xx ++){
-		global.grid[xx][yy] = {land_sprite : spr_terrain_grass, actor : noone}	
+		var _topdown_cell = tilemap_get(_map_id, xx, yy);
+		global.grid[xx][yy] = {land_sprite : spr_terrain_grass, actor : noone, blocked : false};
+		
+		if (_topdown_cell == 1){
+			show_debug_message("found a wall")
+			global.grid[xx][yy].land_sprite = spr_terrain_wall_test;	
+			global.grid[xx][yy].blocked = true;	
+			show_debug_message("global.grid[xx][yy]: " + string(global.grid[xx][yy]))
+		}
 	}
 }
 
