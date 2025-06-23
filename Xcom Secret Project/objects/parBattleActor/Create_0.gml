@@ -1,4 +1,4 @@
-sprites = global.battle_sprites.civilian;
+sprites = global.battle_sprites.soldier;
 
 show_debug_message("sprites: " + string(sprites));
 
