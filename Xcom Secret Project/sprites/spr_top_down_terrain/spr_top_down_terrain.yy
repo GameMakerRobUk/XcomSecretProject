@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"spr_top_down_terrain",
   "bboxMode":0,
-  "bbox_bottom":15,
+  "bbox_bottom":31,
   "bbox_left":0,
   "bbox_right":63,
   "bbox_top":0,
