@@ -5,6 +5,7 @@ vcells = room_height div CELL_SIZE;
 
 var _lay_id = layer_get_id("ts_top_down");
 var _map_id = layer_tilemap_get_id(_lay_id);
+layer_set_visible(_lay_id, false);
 
 global.grid = [];
 spawns = {
@@ -18,7 +19,14 @@ enum TOP_DOWN_CELL { empty, wall, player_spawn, enemy_spawn, civilian_spawn };
 for (var yy = 0; yy < vcells; yy ++){
 	for (var xx = 0; xx < hcells; xx ++){
 		var _topdown_cell = tilemap_get(_map_id, xx, yy);
-		global.grid[xx][yy] = {land_sprite : spr_terrain_grass, actor : noone, blocked : false, xx : xx, yy : yy};
+		global.grid[xx][yy] = { 
+								land_sprite : spr_terrain_grass, 
+								actor : noone, 
+								blocked : false, 
+								xx : xx, 
+								yy : yy,
+								revealed : false,
+							  };
 		
 		switch _topdown_cell{
 			case TOP_DOWN_CELL.wall:{
@@ -55,6 +63,7 @@ while (_soldiers_spawned < _num_soldiers){
 	var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
 	var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
 	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleSoldier, {xx : _node.xx, yy : _node.yy});
+	reveal_area(_node.xx, _node.yy);
 	_node.actor = _actor;
 	
 	_soldiers_spawned ++;
@@ -95,6 +104,8 @@ while (_civilians_spawned < _num_civilians){
 	_civilians_spawned ++;
 }
 
+state = BATTLE.initialise;
+
 method(, function select_next_unit(_team){
 	if (array_length(units[_team]) == 0){
 		exit;	
@@ -105,6 +116,21 @@ method(, function select_next_unit(_team){
 method(, function setup_battle_player_input(){
 	state = BATTLE.player_input;	
 });
+
+method(, function reveal_area(_start_xx, _start_yy){
+	for (var yy = _start_yy - 8; yy <= _start_yy + 8; yy ++){
+		if (yy < 0) continue;
+		if (yy >= vcells) continue;
+		
+		for (var xx = _start_xx - 8; xx <= _start_xx + 8; xx ++){
+			if (xx < 0) continue;
+			if (xx >= hcells) continue;
+			
+			var _node = global.grid[xx][yy];
+			_node.revealed = true;
+		}
+	}
+});	
 
 
 //var _spawn_x = (irandom(xx - 1) div CELL_SIZE) * CELL_SIZE;

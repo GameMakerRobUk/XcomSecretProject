@@ -4,4 +4,8 @@ show_debug_message("sprites: " + string(sprites));
 
 initialised = false;
 
-alarm[0] = 20;
+//alarm[0] = 20;
+state = "idle";
+dir = "ne";
+
+revealed = false;
