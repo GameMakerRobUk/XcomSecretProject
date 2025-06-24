@@ -11,7 +11,7 @@ global.grid = [];
 spawns = {
 	player : [],
 	enemy : [],
-	civilian : [],
+	neutral : [],
 }
 
 enum TOP_DOWN_CELL { empty, wall, player_spawn, enemy_spawn, civilian_spawn };
@@ -41,7 +41,7 @@ for (var yy = 0; yy < vcells; yy ++){
 				array_push(spawns.enemy, global.grid[xx][yy]);	
 			}; break;
 			case TOP_DOWN_CELL.civilian_spawn:{
-				array_push(spawns.civilian, global.grid[xx][yy]);	
+				array_push(spawns.neutral, global.grid[xx][yy]);	
 			}; break;
 		}
 	}
@@ -51,58 +51,54 @@ tile_width = sprite_get_width(spr_terrain_grass);
 tile_height = sprite_get_height(spr_terrain_grass);
 level = 0;
 
-var _soldiers_spawned = 0;
-var _num_soldiers = 8;
-
-while (_soldiers_spawned < _num_soldiers){
-	if (array_length(spawns.player) == 0){
-		show_debug_message("no more player spawns left")
-		exit;	
+method(, function spawn_actors(_obj, _spawns, _num){
+	var _spawned = 0;
+	
+	while (_spawned < _num){
+		if (array_length(_spawns) == 0){
+			show_debug_message("no more spawns left")
+			exit;	
+		}
+		var _node = array_shift(_spawns);
+		var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
+		var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
+		var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", _obj, {cell_x : _node.xx, cell_y : _node.yy});
+		show_debug_message("spawning " + string(_obj) + " at " + string(_node));
+		show_debug_message("actor xx: " + string(_actor.cell_x) + "," + string(_actor.cell_y))
+		_node.actor = _actor;
+	
+		_spawned ++;
 	}
-	var _node = array_shift(spawns.player);
-	var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
-	var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
-	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleSoldier, {xx : _node.xx, yy : _node.yy});
-	reveal_area(_node.xx, _node.yy);
-	_node.actor = _actor;
+});
+
+
+method(, function spawn_soldiers(_num_wanted){
+	spawn_actors(objBattleSoldier, spawns.player, _num_wanted);
+});
+
+method(, function spawn_aliens(_num_wanted){
+	array_shuffle(spawns.enemy);
+	spawn_actors(objBattleZombie, spawns.enemy, _num_wanted);
+});
+
+method(, function spawn_civilians(_num_wanted){
+	array_shuffle(spawns.neutral);
+	spawn_actors(objBattleCivilian, spawns.neutral, _num_wanted);
+});
+
+spawn_soldiers(8);
+
+with objBattleSoldier{
+	show_debug_message("xx: " + string(xx) + ", yy: " + string(yy))
+	var _node = global.grid[cell_x][cell_y];
 	
-	_soldiers_spawned ++;
-	
-	show_debug_message("spawned soldier at " + string(_node.xx) + "," + string(_node.yy))
+	with objBattle{
+		reveal_area(_node.xx, _node.yy);	
+	}
 }
 
-var _enemies_spawned = 0;
-var _num_aliens = 6;
-array_shuffle(spawns.enemy);
-
-while (_enemies_spawned < _num_aliens){
-	if (array_length(spawns.enemy) == 0){
-		exit;	
-	}
-	var _node = array_shift(spawns.enemy);
-	var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
-	var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
-	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleZombie, {xx : _node.xx, yy : _node.yy});
-	_node.actor = _actor;
-	
-	_enemies_spawned ++;
-}
-
-var _civilians_spawned = 0;
-var _num_civilians = 8;
-array_shuffle(spawns.civilian);
-
-while (_civilians_spawned < _num_civilians){
-	if (array_length(spawns.civilian) == 0){
-		exit;	
-	}
-	var _node = array_shift(spawns.civilian);
-	var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
-	var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
-	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleCivilian, {xx : _node.xx, yy : _node.yy});
-	_node.actor = _actor;
-	_civilians_spawned ++;
-}
+spawn_aliens(6);
+spawn_civilians(6);
 
 state = BATTLE.initialise;
 
@@ -131,64 +127,3 @@ method(, function reveal_area(_start_xx, _start_yy){
 		}
 	}
 });	
-
-
-//var _spawn_x = (irandom(xx - 1) div CELL_SIZE) * CELL_SIZE;
-//var _spawn_y = (irandom(yy - 1) div CELL_SIZE) * CELL_SIZE;
-
-//var _num_of_soldiers = 8;
-	
-//while (_num_of_soldiers > 0){
-//	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleSoldier);
-//	global.grid[_spawn_x][_spawn_y].actor = _actor;
-//	var _diff = CELL_SIZE;
-//	var _attempts = 0;
-	
-//	show_debug_message("creating soldier at " + string(_spawn_x) + "," + string(_spawn_y))
-	
-//	while (global.grid[_spawn_x][_spawn_y].actor != noone){
-			  
-//		_spawn_x = choose(_spawn_x, _spawn_x + _diff, _spawn_x - _diff);
-//		_spawn_y = choose(_spawn_y, _spawn_y + _diff, _spawn_y - _diff);
-//		_attempts ++;
-		
-//		_spawn_x = clamp(_spawn_x, 0, hcells - 1);
-//		_spawn_y = clamp(_spawn_y, 0, vcells - 1);
-		
-//		if (_attempts > 50){
-//			_diff += CELL_SIZE;
-//		}
-//	}
-	
-//	_num_of_soldiers --;
-//}
-
-//var _num_of_aliens = 6;
-
-//var _spawn_x = (irandom(xx - 1) div CELL_SIZE) * CELL_SIZE;
-//var _spawn_y = (irandom(yy - 1) div CELL_SIZE) * CELL_SIZE;
-
-//while (_num_of_aliens > 0){
-//	var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", objBattleZombie);
-//	global.grid[_spawn_x][_spawn_y].actor = _actor;
-//	var _diff = CELL_SIZE;
-//	var _attempts = 0;
-	
-//	show_debug_message("creating soldier at " + string(_spawn_x) + "," + string(_spawn_y))
-	
-//	while (global.grid[_spawn_x][_spawn_y].actor != noone){
-			  
-//		_spawn_x = choose(_spawn_x, _spawn_x + _diff, _spawn_x - _diff);
-//		_spawn_y = choose(_spawn_y, _spawn_y + _diff, _spawn_y - _diff);
-//		_attempts ++;
-		
-//		_spawn_x = clamp(_spawn_x, 0, hcells - 1);
-//		_spawn_y = clamp(_spawn_y, 0, vcells - 1);
-		
-//		if (_attempts > 50){
-//			_diff += CELL_SIZE;
-//		}
-//	}
-	
-//	_num_of_aliens --;
-//}
