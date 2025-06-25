@@ -169,6 +169,7 @@ method(, function move_unit(){
 		_node.actor = current_unit;
 		current_unit.cell_x = cursor_grid_x;
 		current_unit.cell_y = cursor_grid_y;
+		reveal_area(cursor_grid_x, cursor_grid_y)
 		
 		show_debug_message("_old_node: " + string(_old_node));
 		show_debug_message("_node: " + string(_node));
