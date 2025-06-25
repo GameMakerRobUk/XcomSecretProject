@@ -56,11 +56,11 @@ switch state {
 	}; break;
 	
 	case BATTLE.player_input : {
-		cursor_grid_x = floor((mouse_x / tile_width) + (mouse_y / tile_height));
-		cursor_grid_y = floor((mouse_y / tile_height) - (mouse_x / tile_width));	
+		cursor_cell_x = floor((mouse_x / tile_width) + (mouse_y / tile_height));
+		cursor_cell_y = floor((mouse_y / tile_height) - (mouse_x / tile_width));	
 	
-		cursor_grid_x = clamp(cursor_grid_x, 0, hcells - 1);
-		cursor_grid_y = clamp(cursor_grid_y, 0, vcells - 1);
+		cursor_cell_x = clamp(cursor_cell_x, 0, hcells - 1);
+		cursor_cell_y = clamp(cursor_cell_y, 0, vcells - 1);
 		
 		if (mouse_check_button_pressed(mb_left)){
 			click_on_unit();

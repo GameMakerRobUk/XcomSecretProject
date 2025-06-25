@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"get_nodes_in_range",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"get_nodes_in_range",
+  "parent":{
+    "name":"Battle",
+    "path":"folders/Scripts/Battle.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

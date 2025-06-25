@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"initialise_nodes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"initialise_nodes",
+  "parent":{
+    "name":"Battle",
+    "path":"folders/Scripts/Battle.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
