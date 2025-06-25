@@ -134,11 +134,44 @@ method(, function center_on_pos(_x, _y){
 	with objCamera{
 		follow = {x : _x, y : _y};
 	}
-})
+});
 
 method(, function center_on_grid_pos(_cell_x, _cell_y){
 	var _x = 0;
 	var _y = 0;
 	
 	center_on_pos(_x, _y);
+});
+
+method(, function click_on_unit(){
+	var _node = global.grid[cursor_grid_x][cursor_grid_y];
+	var _actor = _node.actor;
+	if (_actor != noone && _actor.team == current_team){
+		current_unit = _actor;	
+	}	
+});
+
+method(, function move_unit(){
+	show_debug_message("move_unit");
+	if (current_unit == noone) exit;	
+	
+	show_debug_message("current_unit: " + string(current_unit));
+	
+	var _node = global.grid[cursor_grid_x][cursor_grid_y];
+	var _actor = _node.actor;
+	
+	show_debug_message("_node: " + string(_node));
+	show_debug_message("_actor: " + string(_actor));
+	
+	if (_actor == noone){
+		var _old_node = global.grid[current_unit.cell_x][current_unit.cell_y];
+		_old_node.actor = noone;
+		_node.actor = current_unit;
+		current_unit.cell_x = cursor_grid_x;
+		current_unit.cell_y = cursor_grid_y;
+		
+		show_debug_message("_old_node: " + string(_old_node));
+		show_debug_message("_node: " + string(_node));
+		show_debug_message("_actor: " + string(_actor));
+	}
 });

@@ -63,11 +63,8 @@ switch state {
 		cursor_grid_y = clamp(cursor_grid_y, 0, vcells - 1);
 		
 		if (mouse_check_button_pressed(mb_left)){
-			var _node = global.grid[cursor_grid_x][cursor_grid_y];
-			var _actor = _node.actor;
-			if (_actor != noone && _actor.team == current_team){
-				current_unit = _actor;	
-			}
+			click_on_unit();
+			move_unit();
 		}
 	};
 }
