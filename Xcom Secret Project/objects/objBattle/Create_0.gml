@@ -51,6 +51,9 @@ tile_width = sprite_get_width(spr_terrain_grass);
 tile_height = sprite_get_height(spr_terrain_grass);
 level = 0;
 
+cursor_grid_x = 0;
+cursor_grid_y = 0;
+
 method(, function spawn_actors(_obj, _spawns, _num){
 	var _spawned = 0;
 	
@@ -63,8 +66,7 @@ method(, function spawn_actors(_obj, _spawns, _num){
 		var _spawn_x = (_node.xx div CELL_SIZE) * CELL_SIZE;
 		var _spawn_y = (_node.yy div CELL_SIZE) * CELL_SIZE;
 		var _actor = instance_create_layer(_spawn_x, _spawn_y, "Actors", _obj, {cell_x : _node.xx, cell_y : _node.yy});
-		show_debug_message("spawning " + string(_obj) + " at " + string(_node));
-		show_debug_message("actor xx: " + string(_actor.cell_x) + "," + string(_actor.cell_y))
+
 		_node.actor = _actor;
 	
 		_spawned ++;
@@ -127,3 +129,16 @@ method(, function reveal_area(_start_xx, _start_yy){
 		}
 	}
 });	
+
+method(, function center_on_pos(_x, _y){
+	with objCamera{
+		follow = {x : _x, y : _y};
+	}
+})
+
+method(, function center_on_grid_pos(_cell_x, _cell_y){
+	var _x = 0;
+	var _y = 0;
+	
+	center_on_pos(_x, _y);
+});

@@ -10,6 +10,15 @@ for (var yy = 0; yy < vcells; yy ++){
 		
 		if (_node.actor != noone && _node.actor.revealed){
 			draw_sprite(_node.actor.sprite_index, _node.actor.image_index, _draw_x, _draw_y);	
+			if (_node.actor == current_unit){
+				draw_sprite(spr_cursor_current_actor, 0, _draw_x, _draw_y);
+			}	
+		}
+		
+		if (state == BATTLE.player_input){
+			_draw_x = (cursor_grid_x - cursor_grid_y) * (tile_width / 2);
+			_draw_y = (cursor_grid_x + cursor_grid_y) * (tile_height / 2) - (level * ( (tile_height * 2) - 6) );
+			draw_sprite(spr_cursor, 0, _draw_x, _draw_y);
 		}
 	}
 }

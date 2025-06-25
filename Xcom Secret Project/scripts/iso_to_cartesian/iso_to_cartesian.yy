@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"iso_to_cartesian",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"iso_to_cartesian",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

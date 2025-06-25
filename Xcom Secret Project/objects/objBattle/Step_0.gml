@@ -35,8 +35,10 @@ switch state {
 	case BATTLE.team_take_turn : {
 		switch current_team {
 			case TEAMS.player : {
-				select_next_unit(TEAMS.player);
+				//select_next_unit(TEAMS.player);
 				setup_battle_player_input();
+				var _cam_coords = iso_to_cartesian(objBattleSoldier.x * CELL_SIZE, objBattleSoldier.y * CELL_SIZE);
+				center_on_pos(_cam_coords.x, _cam_coords.y);
 			}; break;
 			
 			case TEAMS.enemy : {
@@ -54,6 +56,18 @@ switch state {
 	}; break;
 	
 	case BATTLE.player_input : {
+		cursor_grid_x = floor((mouse_x / tile_width) + (mouse_y / tile_height));
+		cursor_grid_y = floor((mouse_y / tile_height) - (mouse_x / tile_width));	
+	
+		cursor_grid_x = clamp(cursor_grid_x, 0, hcells - 1);
+		cursor_grid_y = clamp(cursor_grid_y, 0, vcells - 1);
 		
+		if (mouse_check_button_pressed(mb_left)){
+			var _node = global.grid[cursor_grid_x][cursor_grid_y];
+			var _actor = _node.actor;
+			if (_actor != noone && _actor.team == current_team){
+				current_unit = _actor;	
+			}
+		}
 	};
 }
